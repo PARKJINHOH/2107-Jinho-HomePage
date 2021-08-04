@@ -8,6 +8,6 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface PageMapper {
+public interface TestMapper {
     List<testVo> selectTest();
 }
