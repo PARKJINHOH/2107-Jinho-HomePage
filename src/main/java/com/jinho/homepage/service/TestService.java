@@ -1,7 +1,7 @@
 package com.jinho.homepage.service;
 
 import com.jinho.homepage.mapper.TestMapper;
-import com.jinho.homepage.vo.testVo;
+import com.jinho.homepage.vo.TestVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class TestService {
         this.testMapper = testMapper;
     }
 
-    public List<testVo> selectTest(){
+    public List<TestVo> selectTest(){
         return testMapper.selectTest();
     }
 }

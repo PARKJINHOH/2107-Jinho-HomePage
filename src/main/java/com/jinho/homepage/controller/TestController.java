@@ -1,7 +1,7 @@
 package com.jinho.homepage.controller;
 
 import com.jinho.homepage.service.TestService;
-import com.jinho.homepage.vo.testVo;
+import com.jinho.homepage.vo.TestVo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +17,7 @@ public class TestController {
     }
 
     @GetMapping("/test")
-    public List<testVo> testList(){
+    public List<TestVo> testList(){
         return testService.selectTest();
     }
 }

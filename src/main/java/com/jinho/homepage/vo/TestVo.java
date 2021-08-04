@@ -3,7 +3,7 @@ package com.jinho.homepage.vo;
 import lombok.Data;
 
 @Data
-public class testVo {
+public class TestVo {
     private String id;
     private String name;
 }
