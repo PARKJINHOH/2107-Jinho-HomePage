@@ -4,7 +4,3 @@ spring:
     url: jdbc:mariadb://168.138.53.174:3306/sys?characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: jiadg0609
-mybatis:
-  mapper-locations: mybatis/**/*.xml
-server:
-  port: 8080
