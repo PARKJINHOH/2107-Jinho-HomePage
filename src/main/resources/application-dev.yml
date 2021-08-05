@@ -4,3 +4,8 @@ spring:
     url: jdbc:mariadb://140.83.53.129:3306/sys?characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 1234
+  thymeleaf:
+    cache: false
+  devtools:
+    livereload:
+      enabled: true
