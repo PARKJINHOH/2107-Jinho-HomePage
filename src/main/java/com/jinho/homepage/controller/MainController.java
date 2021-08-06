@@ -14,8 +14,13 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String mainPage() {
+    public String getMainPage() {
         return "/mainPage/mainPage";
+    }
+
+    @GetMapping("/forum")
+    public String getForumPage() {
+        return "/subPage/forumPage";
     }
 
 }
