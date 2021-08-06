@@ -7,10 +7,10 @@
     <title>Main Page</title>
 
     <!-- 합쳐지고 최소화된 최신 CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css}">
 
     <!-- 부가적인 테마 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css}">
 </head>
 <body>
     <nav class="navbar navbar-inverse">
@@ -20,13 +20,13 @@
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a th:href="@{/}">Home</a></li>
-                <li><a th:href="@{#}">Page 1</a></li>
+                <li><a th:href="@{#}">Page 1</a></li>s
             </ul>
         </div>
     </nav>
 
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script th:src="@{https://code.jquery.com/jquery-3.6.0.slim.js}" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js}"></script>
 </body>
 </html>
