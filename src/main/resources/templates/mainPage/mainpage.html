@@ -14,8 +14,15 @@
 <body>
     <header>
         <div class="jumbotron text-center" style="margin-bottom:0">
-            <h1>My First Bootstrap 4 Page</h1>
-            <p>Resize this responsive page to see the effect!</p>
+            <h1>Jinho's Blog</h1>
+            <div class="float-center">
+                <a th:href="@{https://github.com/PARKJINHOH}" title="github">
+                    <img th:src="@{/static/img/Github_img_100.png}" class="img-responsive" alt="github">
+                </a>
+                <a th:href="@{https://adg0609.tistory.com/}" title="github">
+                    <img th:src="@{/static/img/tistory_img_100.png}" class="img-responsive" alt="tistory">
+                </a>
+            </div>
         </div>
 
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -29,15 +36,12 @@
                         <a th:href="@{/}" class="nav-link" >자유게시판</a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/}" class="nav-link" >Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/}" class="nav-link" >Link</a>
+                        <a th:href="@{/}" class="nav-link" >블로그 구현 기술</a>
                     </li>
                 </ul>
             </div>
-            <li class="float-right"><!-- d-none 로그인 구현 차후 추가 -->
-                <a th:href="@{/}" class="btn btn-info d-none" role="button">Login</a>
+            <li class="float-right">
+                <a th:href="@{/}" class="btn btn-info" role="button">Login</a>
             </li>
         </nav>
     </header>
@@ -76,17 +80,6 @@
             </div>
         </div>
     </div>
-
-    <footer class="jumbotron" style="margin-bottom:0">
-        <div class="col-sm-4">
-            <a th:href="@{https://github.com/PARKJINHOH}" title="github">
-                <img th:src="@{/static/img/Github_img_100.png}" class="img-responsive" alt="github">
-            </a>
-            <a th:href="@{https://adg0609.tistory.com/}" title="github">
-                <img th:src="@{/static/img/tistory_img_100.png}" class="img-responsive" alt="tistory">
-            </a>
-        </div>
-    </footer>
 
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script th:src="@{https://code.jquery.com/jquery-3.6.0.slim.js}" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
