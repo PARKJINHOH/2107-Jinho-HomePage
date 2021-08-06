@@ -7,26 +7,36 @@
     <title>Main Page</title>
 
     <!-- 합쳐지고 최소화된 최신 CSS -->
-    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-    <!-- 부가적인 테마 -->
-    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css}">
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" th:href="@{/}">WebSiteName</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class="active"><a th:href="@{/}">Home</a></li>
-                <li><a th:href="@{#}">Page 1</a></li>s
-            </ul>
+    <header>
+        <div class="jumbotron text-center">
+            <h1>My First Bootstrap Page</h1>
+            <p>Resize this responsive page to see the effect!</p>
         </div>
-    </nav>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h3>Column 1</h3>
+                    <p>Lorem ipsum dolor..</p>
+                </div>
+                <div class="col-sm-4">
+                    <h3>Column 2</h3>
+                    <p>Lorem ipsum dolor..</p>
+                </div>
+                <div class="col-sm-4">
+                    <h3>Column 3</h3>
+                    <p>Lorem ipsum dolor..</p>
+                </div>
+            </div>
+        </div>
+    </header>
 
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script th:src="@{https://code.jquery.com/jquery-3.6.0.slim.js}" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
-    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
 </body>
 </html>
