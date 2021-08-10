@@ -6,15 +6,40 @@
     <title>Forum</title>
 </head>
 <body>
-<!-- Header -->
-<div th:replace="/fragments/header.html" :: fragment-header/>
+    <!-- Header -->
+    <div th:replace="/fragments/header.html" :: fragment-header/>
 
-<!-- Nav -->
-<div th:replace="/fragments/nav.html" :: fragment-nav/>
+    <!-- Nav -->
+    <div th:replace="/fragments/nav.html" :: fragment-nav/>
+
+    <div class="alert alert-dark">
+        <strong>자유게시판</strong> 자유롭게 작성하는 게시판입니다.
+        <div class="float-right">
+            <a th:href="@{/}" id="forum_write_btn" class="btn btn-outline-info" role="button">글쓰기</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th style="width: 10%">No</th>
+            <th style="width: 50%">제목</th>
+            <th style="width: 20%">글쓴이</th>
+            <th style="width: 10%">날짜</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>9999</td>
+            <td>Test Title</td>
+            <td>닉네임</td>
+            <td>2020-07-05</td>
+        </tr>
+        </tbody>
+    </table>
 
 
-
-<!--  공통 스트립트  -->
-<div th:replace="/fragments/commonScript.html" :: fragment-commonScript/>
+    <!--  공통 스트립트  -->
+    <div th:replace="/fragments/commonScript.html" :: fragment-commonScript/>
 </body>
 </html>
