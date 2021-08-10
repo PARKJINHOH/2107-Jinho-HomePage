@@ -18,7 +18,6 @@ public class TestController {
 
     @GetMapping("/test")
     public List<TestVo> testList(){
-        System.out.println("테스트");
         return testService.selectTest();
     }
 }
