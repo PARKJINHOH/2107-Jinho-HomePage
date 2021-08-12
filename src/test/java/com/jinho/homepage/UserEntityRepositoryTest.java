@@ -31,7 +31,7 @@ public class UserEntityRepositoryTest {
         UserEntity findUser = userRepository.save(user);
 
         //then
-        assertThat(findUser.getId()).isEqualTo(user.getId());
+        assertThat(findUser.getUserSeq()).isEqualTo(user.getUserSeq());
         assertThat(findUser.getEmail()).isEqualTo(user.getEmail());
 
         // 트랜잭션 범위내에서 생성과 찾기를 동시에 하기 떄문에 영속성 컨텍스트가 동일함으로 findUser와 user은 동일하다.
