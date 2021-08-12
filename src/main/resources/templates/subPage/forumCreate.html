@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Head -->
+    <div th:replace="/fragments/head.html" :: fragment-head/>
+    <title>Forum</title>
+</head>
+<body>
+    <!-- Header -->
+    <div th:replace="/fragments/header.html" :: fragment-header/>
+
+    <!-- Nav -->
+    <div th:replace="/fragments/nav.html" :: fragment-nav/>
+
+    <form class="createForm" th:action="@{/forum}" method="post">
+        <tr>
+           <th>
+               <span class="badge badge-secondary">자유게시판</span>
+           </th>
+            <th>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">제목</span>
+                    </div>
+                    <input type="text" class="form-control" id="title" aria-describedby="basic-addon3">
+                </div>
+            </th>
+        </tr>
+    </form>
+
+    <!--  공통 스트립트  -->
+    <div th:replace="/fragments/commonScript.html" :: fragment-commonScript/>
+</body>
+</html>
