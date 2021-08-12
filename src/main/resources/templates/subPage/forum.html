@@ -21,20 +21,19 @@
 
     <table class="table table-bordered">
         <thead class="thead-dark">
-        <tr>
-            <th style="width: 10%">No</th>
-            <th style="width: 50%">제목</th>
-            <th style="width: 20%">글쓴이</th>
-            <th style="width: 10%">날짜</th>
-        </tr>
+            <tr>
+                <th style="width: 10%">No</th>
+                <th style="width: 70%">제목</th>
+                <th style="width: 20%">글쓴이</th>
+                <!--<th style="width: 10%">날짜</th>-->
+            </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>9999</td>
-            <td>Test Title</td>
-            <td>닉네임</td>
-            <td>2020-07-05</td>
-        </tr>
+            <tr th:each="board : ${boardList}">
+                <td th:text="${board.getBoardSeq()}"></td>
+                <td th:text="${board.getTitle()}"></td>
+                <td th:text="${board.getWriter()}"></td>
+            </tr>
         </tbody>
     </table>
 
