@@ -15,13 +15,14 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Table(name = "tbl_user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity implements UserDetails {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "user_seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 데이터베이스에 위임
-    private Long id;
+    private Long userSeq;
 
     @Column(name = "email", unique = true)
     private String email;

@@ -34,6 +34,6 @@ public class UserService implements UserDetailsService {
                 .authority("USER")
                 .password(userDto.getPassword()).build();
 
-        return userRepository.save(user).getId(); // 회원을 저장하고 저장한 회원의 id를 return.
+        return userRepository.save(user).getUserSeq(); // 회원을 저장하고 저장한 회원의 id를 return.
     }
 }
