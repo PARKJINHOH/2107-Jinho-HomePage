@@ -47,6 +47,9 @@
                         <div class="form-group">
                             <input type="submit" value="Login" class="btn float-right login_btn">
                         </div>
+                        <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
+                            <span style="color:red" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></span>
+                        </div>
                     </form>
                 </div>
                 <div class="card-footer">
