@@ -12,9 +12,4 @@ public class MainController {
         return "/mainPage/mainPage";
     }
 
-    @GetMapping("/forum")
-    public String getForumPage() {
-        return "/subPage/forumPage";
-    }
-
 }
