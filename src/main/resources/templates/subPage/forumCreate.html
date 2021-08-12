@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Head -->
     <div th:replace="/fragments/head.html" :: fragment-head/>
@@ -11,6 +11,8 @@
 
     <!-- Nav -->
     <div th:replace="/fragments/nav.html" :: fragment-nav/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/subPage/forumCreate.css}">
 
     <form class="createForm" th:action="@{/forum}" method="post">
         <tr>
