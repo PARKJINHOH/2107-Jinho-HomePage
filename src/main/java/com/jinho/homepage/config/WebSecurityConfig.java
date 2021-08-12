@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
 //                .csrf().disable() // disable 하지 않으면 csrf를 수행하기 위한 파라미터가 없다고 Error 발생
                 .authorizeRequests()
-                    .antMatchers("/logout").authenticated() // 로그인 필요
+                    .antMatchers("/logout", "/forum/write").authenticated() // 로그인 필요
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().permitAll()
                 .and()
