@@ -1,17 +1,15 @@
 package com.jinho.homepage.controller;
 
 import com.jinho.homepage.service.MainService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@RequiredArgsConstructor
 public class MainController {
 
-    private MainService mainService;
-
-    public MainController(MainService mainService) {
-        this.mainService = mainService;
-    }
+    private final MainService mainService;
 
     @GetMapping("/")
     public String getMainPage() {
