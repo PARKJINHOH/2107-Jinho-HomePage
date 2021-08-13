@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <!-- Head -->
     <div th:replace="/fragments/head.html" :: fragment-head/>
@@ -12,9 +12,11 @@
     <!-- Nav -->
     <div th:replace="/fragments/nav.html" :: fragment-nav/>
 
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/summernote/summernote-lite.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/subPage/forumCreate.css}">
 
-    <form class="createForm" th:action="@{/forum}" method="post">
+    <form class="createForm" th:action="@{/forum/write}" method="post">
         <tr>
            <th>
                <span class="badge badge-secondary">자유게시판</span>
@@ -24,13 +26,29 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon3">제목</span>
                     </div>
-                    <input type="text" class="form-control" id="title" aria-describedby="basic-addon3">
+                    <input type="text" class="form-control" id="title" name="title" aria-describedby="basic-addon3">
                 </div>
             </th>
+            <th>
+                <div>
+                    <span class="input-group-text">본문내용</span>
+                </div>
+                <!-- SummerNote -->
+                <textarea id="summernote" name="content"></textarea>
+            </th>
         </tr>
+        <button type="submit" class="btn btn-info" role="button">작성</button>
     </form>
+
+
 
     <!--  공통 스트립트  -->
     <div th:replace="/fragments/commonScript.html" :: fragment-commonScript/>
+
+    <!-- SummerNote -->
+    <script th:src="@{/static/js/summernote/summernote-lite.js}"></script>
+    <script th:src="@{/static/js/summernote/lang/summernote-ko-KR.js}"></script>
+    <script th:src="@{/static/js/summernote/summernoteConfig.js}"></script>
+
 </body>
 </html>

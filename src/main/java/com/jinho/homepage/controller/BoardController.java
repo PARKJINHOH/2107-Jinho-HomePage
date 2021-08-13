@@ -6,11 +6,9 @@ import com.jinho.homepage.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -44,8 +42,10 @@ public class BoardController {
     }
 
     @PostMapping("/forum/write")
-    public void saveBoard(@RequestBody BoardSaveReqDto boardSaveReqDto) {
+    public String saveBoard(BoardSaveReqDto boardSaveReqDto, Principal principal) {
+        boardSaveReqDto.setWriter(principal.getName());
         boardService.boardSave(boardSaveReqDto);
+        return "redirect:/forum";
     }
 
 }
