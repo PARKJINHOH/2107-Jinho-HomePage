@@ -32,7 +32,6 @@
             <tr th:each="board : ${boardList}">
                 <td th:text="${board.getBoardSeq()}"></td>
                 <td><a th:text="${board.getTitle()}" th:href="@{/forum/{seq}(seq=${board.getBoardSeq()})}"></a></td>
-                <td th:text="${board.getTitle()}"></td>
                 <td th:text="${board.getWriter()}"></td>
             </tr>
         </tbody>
