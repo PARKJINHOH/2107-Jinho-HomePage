@@ -2,9 +2,10 @@ package com.jinho.homepage.dto;
 
 import com.jinho.homepage.entity.BoardEntity;
 import lombok.Data;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class BoardResDto {
 
     private Long boardSeq;

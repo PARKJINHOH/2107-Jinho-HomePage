@@ -8,13 +8,14 @@ import com.jinho.homepage.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
@@ -85,4 +86,32 @@ public class BoardController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+
+    /* 자유게시판 - 삭제 */
+    @PostMapping("/forum/delete")
+    public ResponseEntity<Long> boardDelete(@RequestBody BoardResDto boardResDto){
+
+        System.out.println("getBoardSeq : " + boardResDto.getBoardSeq());
+
+        Long boardSeq = boardResDto.getBoardSeq();
+
+        String currentUserName = null;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            currentUserName = authentication.getName();
+        }
+
+        String writer = boardService.findById(boardSeq).getWriter();
+
+        if (currentUserName != null && currentUserName.equals(writer)) {
+            boardService.boardDelete(boardSeq);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
 }
