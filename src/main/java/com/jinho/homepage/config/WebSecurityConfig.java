@@ -16,8 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    //https://shinsunyoung.tistory.com/78
-
     private UserService userService;
 
     @Override
