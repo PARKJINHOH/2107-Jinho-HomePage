@@ -2,6 +2,7 @@ package com.jinho.homepage.controller;
 
 import com.jinho.homepage.dto.BoardResDto;
 import com.jinho.homepage.dto.BoardSaveReqDto;
+import com.jinho.homepage.dto.BoardUpdateDto;
 import com.jinho.homepage.entity.UploadFileEntity;
 import com.jinho.homepage.service.BoardService;
 import com.jinho.homepage.service.ImageService;
@@ -24,9 +25,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
-
-    // https://tychejin.tistory.com/191
-    // https://victorydntmd.tistory.com/327?category=764331
 
     private final BoardService boardService;
     private final ImageService imageService;
@@ -59,7 +57,7 @@ public class BoardController {
     @PostMapping("/forum/write")
     public String saveBoard(BoardSaveReqDto boardSaveReqDto, Principal principal) {
         boardSaveReqDto.setWriter(principal.getName());
-        Long boardSeq = boardService.boardSave(boardSaveReqDto);
+        boardService.boardSave(boardSaveReqDto);
         return "redirect:/forum";
     }
 
@@ -87,25 +85,42 @@ public class BoardController {
         }
     }
 
+    /* 자유게시판 - 수정 */
+    @GetMapping("/forum/update/{boardSeq}")
+    public String getBoardUpdate(@PathVariable Long boardSeq, Model model){
+        BoardResDto boardResDto = boardService.findById(boardSeq);
+
+        model.addAttribute("board", boardResDto);
+
+        return "/subPage/forumUpdate";
+
+    }
+
+    @PostMapping("/forum/update")
+    public String boardUpdate(@RequestParam Long boardSeq, BoardUpdateDto boardUpdateDto){
+
+        boardService.boardUpdate(boardSeq, boardUpdateDto);
+
+        return "redirect:/forum/" + boardSeq;
+
+    }
+
 
     /* 자유게시판 - 삭제 */
     @PostMapping("/forum/delete")
     public ResponseEntity<Long> boardDelete(@RequestBody BoardResDto boardResDto){
 
-        System.out.println("getBoardSeq : " + boardResDto.getBoardSeq());
-
         Long boardSeq = boardResDto.getBoardSeq();
 
         String currentUserName = null;
 
+        // 작성자 == 사용자 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();
         }
 
-        String writer = boardService.findById(boardSeq).getWriter();
-
-        if (currentUserName != null && currentUserName.equals(writer)) {
+        if (currentUserName != null && currentUserName.equals(boardService.findById(boardSeq).getWriter())) {
             boardService.boardDelete(boardSeq);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

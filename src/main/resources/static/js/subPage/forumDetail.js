@@ -4,7 +4,6 @@ $("#delete").click(function() {
     const token = $("meta[name='_csrf']").attr('content');
 
     const deleteData =JSON.stringify({boardSeq:$("#board_seq").val()});
-    console.log(deleteData);
 
     $.ajax({
         data: deleteData,
