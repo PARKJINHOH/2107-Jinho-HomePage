@@ -6,6 +6,6 @@ spring:
     password: 1234
   thymeleaf:
     cache: false
-  devtools:
-    livereload:
-      enabled: true
+
+# properties 환경 분리하기 ex) 리눅스 내부 폴더에 있는 파일 읽게 하기.
+# 이후 properties 파일이 변경되면 해당 디렉토리에 덮어쓰기
