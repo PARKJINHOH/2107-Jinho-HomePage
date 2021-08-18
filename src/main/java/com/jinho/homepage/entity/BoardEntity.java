@@ -29,8 +29,7 @@ public class BoardEntity {
     private String content;
 
     @Builder
-    public BoardEntity(Long boardSeq, String writer, String title, String content) {
-        this.boardSeq = boardSeq;
+    public BoardEntity(String writer, String title, String content) {
         this.writer = writer;
         this.title = title;
         this.content = content;
