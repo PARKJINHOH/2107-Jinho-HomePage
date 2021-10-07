@@ -125,3 +125,6 @@ buildNumber.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,maven
 homepage.iml
+
+# application.yml 관련 파일 GitIgnore
+src/main/resources/*.yml
