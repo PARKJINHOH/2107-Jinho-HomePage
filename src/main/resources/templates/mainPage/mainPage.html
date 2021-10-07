@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Head -->
+    <div th:replace="/fragments/head.html" :: fragment-head/>
+    <title>Main</title>
+</head>
+<body>
+    <!-- Header -->
+    <div th:replace="/fragments/header.html" :: fragment-header/>
+
+    <!-- Nav -->
+    <div th:replace="/fragments/nav.html" :: fragment-nav/>
+
+    <div class="container" style="margin-top:30px">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2 class="text-center">About Me</h2>
+                <img th:src="@{/static/img/Main_img_200.jpg}" class="rounded img-fluid mx-auto d-block" alt="javaImg">
+                <h4 class="text-center">JINHO PARK</h4>
+                <p>Spring Boot 백엔드 주니어 개발자 입니다.</p>
+                <hr class="d-sm-none">
+            </div>
+            <div class="col-sm-8">
+                <h2 class="text-center">Tech Stack</h2>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img th:src="@{/static/img/Java_img_480.png}" class="rounded img-fluid" alt="java">
+                    </div>
+                    <div class="col-sm-2">
+                        <img th:src="@{/static/img/Spring_img_480.png}" class="rounded img-fluid" alt="spring">
+                    </div>
+                    <div class="col-sm-2">
+                        <img th:src="@{/static/img/Mysql_img_480.png}" class="rounded img-fluid" alt="mysql">
+                    </div>
+                    <div class="col-sm-2">
+                        <img th:src="@{/static/img/MariaDB_img_480.png}" class="rounded img-fluid" alt="mariaDB">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img th:src="@{/static/img/ApacheTomcat_img_400.png}" class="rounded img-fluid" alt="apacheTomcat">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  공통 스트립트  -->
+    <div th:replace="/fragments/commonScript.html" :: fragment-commonScript/>
+</body>
+</html>

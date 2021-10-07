@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Head -->
+    <div th:replace="/fragments/head.html" :: fragment-head/>
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <title>Sign Up</title>
+</head>
+<body>
+
+    <!-- Nav -->
+    <div th:replace="/fragments/nav.html" :: fragment-nav/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/signup.css}">
+
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Sign In</h3>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/signup}" method="post">
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">이메일</i></span>
+                            </div>
+                            <input id="id" type="text" name="email" class="form-control" placeholder="email" maxlength="25">
+
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">비밀번호</i></span>
+                            </div>
+                            <input id="pw" type="password" name="password" class="form-control" placeholder="password" maxlength="15">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">닉네임</i></span>
+                            </div>
+                            <input type="text" name="nickName" class="form-control" placeholder="nickname" maxlength="10">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Submit" class="btn float-right login_btn">
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="social_icon">
+                        <span><i class="fab fa-google-plus-square"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  공통 스트립트  -->
+    <div th:replace="/fragments/commonScript.html" :: fragment-commonScript/>
+
+    <!-- 개별 스트립트 -->
+    <script th:src="@{/static/js/signup.js}"></script>
+</body>
+</html>
