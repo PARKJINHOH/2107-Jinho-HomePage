@@ -9,9 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -35,6 +33,9 @@ public class UserEntity implements UserDetails {
 
     @Column(name = "authority")
     private String authority;
+
+    @OneToMany(mappedBy = "user") // mappedBy : 읽기 전용
+    private List<BoardEntity> boards = new ArrayList<>();
 
     @Builder
     public UserEntity(String email, String nickName, String password, String authority) {

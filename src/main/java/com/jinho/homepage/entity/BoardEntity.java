@@ -28,6 +28,10 @@ public class BoardEntity {
     @Column(name = "board_content")
     private String content;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_seq")
+    private UserEntity user;
+
     @Builder
     public BoardEntity(String writer, String title, String content) {
         this.writer = writer;
