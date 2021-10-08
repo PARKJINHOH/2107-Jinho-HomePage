@@ -1,5 +1,6 @@
 package com.jinho.homepage;
 
+import com.jinho.homepage.dto.Role;
 import com.jinho.homepage.entity.UserEntity;
 import com.jinho.homepage.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ public class UserEntityRepositoryTest {
                 .email("test@naver.com")
                 .password("1234")
                 .nickName("test")
-                .authority("USER")
+                .role(Role.USER)
                 .build();
 
         // when
