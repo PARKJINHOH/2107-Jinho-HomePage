@@ -1,5 +1,6 @@
 package com.jinho.homepage.config;
 
+import com.jinho.homepage.dto.Role;
 import com.jinho.homepage.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Override
     public void configure(WebSecurity web) {
@@ -25,15 +26,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // ADMIN, USER
         http
 //                .csrf().disable() // disable 하지 않으면 csrf를 수행하기 위한 파라미터가 없다고 Error 발생
                 .authorizeRequests()
                     .antMatchers("/logout", "/forum/write").authenticated() // 로그인 필요
-                    .antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
                     .anyRequest().permitAll()
                 .and()
                     .formLogin()
-                        .loginPage("/login")
+                        .loginPage("/login").permitAll()
                         .usernameParameter("email")
                         .defaultSuccessUrl("/")
                 .and()
@@ -41,7 +43,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/login")
                     .invalidateHttpSession(true) // 세션 제거
-                    .deleteCookies("JSESSIONID", "SOME", "OTHER", "COOKIES");
+                    .deleteCookies("JSESSIONID", "SOME", "OTHER", "COOKIES")
+                .and()
+                    .oauth2Login().loginPage("/login")
+                    .userInfoEndpoint()
+                    .userService(userService)
+                ;
+
     }
 
     /* 비밀번호 Encoder */
