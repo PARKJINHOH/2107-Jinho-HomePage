@@ -15,7 +15,7 @@
    * bit.ly/3mvjD3p // 구현 방법
    * bit.ly/3lmK7Vb // Google Cloud Platform
 2. Email 인증
-    * bit.ly/3iHClDK // 구현 방법
+3. 
 
 4. [application.yml Git Ignore 분리하기]
    * properties 환경 분리하기 ex) 리눅스 내부 폴더에 있는 파일 읽게 하기.
