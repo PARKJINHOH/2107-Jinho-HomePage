@@ -1,5 +1,6 @@
 package com.jinho.homepage.entity;
 
+import com.jinho.homepage.dto.Role;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,28 +32,27 @@ public class UserEntity implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "authority")
-    private String authority;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "user") // mappedBy : 읽기 전용
     private List<BoardEntity> boards = new ArrayList<>();
 
     @Builder
-    public UserEntity(String email, String nickName, String password, String authority) {
+    public UserEntity(String email, String nickName, String password, Role role) {
         this.email = email;
         this.nickName = nickName;
         this.password = password;
-        this.authority = authority;
+        this.role = role;
     }
 
     // 사용자 권한을 반환,
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> roles = new HashSet<>();
-        for (String role : authority.split(",")) {
-            roles.add(new SimpleGrantedAuthority(role));
-        }
-        return roles;
+        ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+        auth.add(new SimpleGrantedAuthority(role.getKey()));
+        return auth;
     }
 
     // 사용자의 id를 반환 (unique한 값)
@@ -93,5 +93,14 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         // 계정이 사용 가능한지 확인하는 로직
         return true; // true -> 사용 가능
+    }
+
+    public UserEntity update(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
     }
 }
