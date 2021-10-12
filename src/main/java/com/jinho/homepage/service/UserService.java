@@ -3,9 +3,11 @@ package com.jinho.homepage.service;
 import com.jinho.homepage.dto.Role;
 import com.jinho.homepage.dto.SessionUser;
 import com.jinho.homepage.dto.UserDto;
+import com.jinho.homepage.entity.EmailToken;
 import com.jinho.homepage.entity.OAuthAttributes;
 import com.jinho.homepage.entity.UserEntity;
 import com.jinho.homepage.repository.UserRepository;
+import com.jinho.homepage.service.email.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +31,7 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
 
     private final UserRepository userRepository;
     private final HttpSession httpSession;
+    private final ConfirmationTokenService confirmationTokenService;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -50,6 +53,9 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
         return userRepository.save(user).getUserSeq(); // 회원을 저장하고 저장한 회원의 id를 return.
     }
 
+    /**
+     * OAuth2 관련 설정
+     */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
@@ -75,7 +81,21 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
         UserEntity user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getEmail()))
                 .orElse(attributes.toEntity());
+        user.emailVerifiedSuccess(); // true 변경
 
         return userRepository.save(user);
+    }
+
+
+
+    /**
+     * 이메일 인증 로직
+     * @param token
+     */
+    public void confirmEmail(String token) {
+        EmailToken findConfirmationToken = confirmationTokenService.findByIdAndExpirationDateAfterAndExpired(token);
+        UserEntity findUserInfo = userRepository.findByEmail(findConfirmationToken.getEmail()).get();
+        findConfirmationToken.useToken();	// 토큰 만료 로직을 구현해주면 된다. ex) expired 값을 true로 변경
+        findUserInfo.emailVerifiedSuccess();	// 유저의 이메일 인증 값 변경 로직을 구현해주면 된다. ex) emailVerified 값을 true로 변경
     }
 }
