@@ -36,6 +36,9 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "EmailCertification")
+    private boolean emailCertification; // 이메일 인증 여부 (OAuth2로 회원가입시, UserService 에서 변경))
+
     @OneToMany(mappedBy = "user") // mappedBy : 읽기 전용
     private List<BoardEntity> boards = new ArrayList<>();
 
@@ -45,6 +48,7 @@ public class UserEntity implements UserDetails {
         this.nickName = nickName;
         this.password = password;
         this.role = role;
+        this.emailCertification = false;
     }
 
     // 사용자 권한을 반환,
@@ -102,5 +106,12 @@ public class UserEntity implements UserDetails {
 
     public String getRoleKey() {
         return this.role.getKey();
+    }
+
+    /**
+     * Email 인증 버튼 클릭 Event
+     */
+    public void emailVerifiedSuccess() {
+        this.emailCertification = true;
     }
 }
