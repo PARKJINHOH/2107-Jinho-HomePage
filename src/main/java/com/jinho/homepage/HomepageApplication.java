@@ -24,10 +24,10 @@ public class HomepageApplication extends SpringBootServletInitializer {
 		if (profiles.equals("local")) {
 			return "D:/testFolder/";
 		} else if (profiles.equals("dev")) {
-			return "/testImageDir/";
+			return "/";
 		} else if (profiles.equals("prod")) {
-			return "/testImageDir/";
+			return "/";
 		}
-		return "/testImageDir";
+		return "/";
 	}
 }
