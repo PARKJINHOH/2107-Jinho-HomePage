@@ -99,7 +99,7 @@
           <element id="library" level="project" name="Maven: com.nimbusds:lang-tag:1.5" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-oauth2-jose:5.5.1" />
           <element id="library" level="project" name="Maven: com.nimbusds:nimbus-jose-jwt:9.10" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-mail:2.5.5" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-mail:2.5.2" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context-support:5.3.8" />
           <element id="library" level="project" name="Maven: net.minidev:json-smart:2.4.7" />
           <element id="library" level="project" name="Maven: net.minidev:accessors-smart:2.4.7" />
