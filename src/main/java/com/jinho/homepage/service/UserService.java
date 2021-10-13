@@ -9,6 +9,8 @@ import com.jinho.homepage.entity.UserEntity;
 import com.jinho.homepage.repository.UserRepository;
 import com.jinho.homepage.service.email.ConfirmationTokenService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +26,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
-
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService, OAuth2UserService<OAuth2UserRequest, OAuth2User> {
@@ -33,16 +34,29 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
     private final HttpSession httpSession;
     private final ConfirmationTokenService confirmationTokenService;
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // DB에 User(Email)이 없다면 UsernameNotFoundException 발생.
-        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
+
+        log.info("Login User : {}, Certification : {}", userEntity.getEmail(), userEntity.isEnabled());
+
+        // 이메일 인증 되었는지 확인
+//        if (!userEntity.isEnabled()) {
+        // TODO
+//            return new DisabledException("이메일 인증이 되지 않았습니다.");
+//        }
+
+        return userEntity;
     }
 
 
     public Long userSave(UserDto userDto) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         userDto.setPassword(encoder.encode(userDto.getPassword()));
+        confirmationTokenService.createEmailConfirmationToken(userDto.getEmail());
 
         UserEntity user = UserEntity.builder()
                 .email(userDto.getEmail())
@@ -81,7 +95,7 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
         UserEntity user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getEmail()))
                 .orElse(attributes.toEntity());
-        user.emailVerifiedSuccess(); // true 변경
+        user.emailVerifiedSuccess(); // OAuth2로 회원가입시 true
 
         return userRepository.save(user);
     }
@@ -95,7 +109,14 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
     public void confirmEmail(String token) {
         EmailToken findConfirmationToken = confirmationTokenService.findByIdAndExpirationDateAfterAndExpired(token);
         UserEntity findUserInfo = userRepository.findByEmail(findConfirmationToken.getEmail()).get();
-        findConfirmationToken.useToken();	// 토큰 만료 로직을 구현해주면 된다. ex) expired 값을 true로 변경
-        findUserInfo.emailVerifiedSuccess();	// 유저의 이메일 인증 값 변경 로직을 구현해주면 된다. ex) emailVerified 값을 true로 변경
+
+        log.info("confirmEmail| Email : {}", findUserInfo.getEmail());
+
+        findConfirmationToken.useToken();	// 토큰 만료
+        confirmationTokenService.updateToken(findConfirmationToken);
+
+        findUserInfo.emailVerifiedSuccess();// 유저의 이메일 인증
+        userRepository.save(findUserInfo);
+
     }
 }
