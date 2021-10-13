@@ -37,7 +37,7 @@ public class UserEntity implements UserDetails {
     private Role role;
 
     @Column(name = "EmailCertification")
-    private boolean emailCertification; // 이메일 인증 여부 (OAuth2로 회원가입시, UserService 에서 변경))
+    private boolean emailCertification; // Default = False
 
     @OneToMany(mappedBy = "user") // mappedBy : 읽기 전용
     private List<BoardEntity> boards = new ArrayList<>();
@@ -96,7 +96,7 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         // 계정이 사용 가능한지 확인하는 로직
-        return true; // true -> 사용 가능
+        return emailCertification;
     }
 
     public UserEntity update(String email) {
