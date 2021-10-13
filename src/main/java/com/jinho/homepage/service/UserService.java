@@ -36,6 +36,12 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * 로그인
+     * @param email
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // DB에 User(Email)이 없다면 UsernameNotFoundException 발생.
@@ -43,16 +49,14 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
 
         log.info("Login User : {}, Certification : {}", userEntity.getEmail(), userEntity.isEnabled());
 
-        // 이메일 인증 되었는지 확인
-//        if (!userEntity.isEnabled()) {
-        // TODO
-//            return new DisabledException("이메일 인증이 되지 않았습니다.");
-//        }
-
         return userEntity;
     }
 
-
+    /**
+     * 회원가입
+     * @param userDto
+     * @return
+     */
     public Long userSave(UserDto userDto) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         userDto.setPassword(encoder.encode(userDto.getPassword()));
@@ -91,6 +95,11 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
                 attributes.getNameAttributeKey());
     }
 
+    /**
+     * OAuth2 회원가입
+     * @param attributes
+     * @return
+     */
     private UserEntity saveOrUpdate(OAuthAttributes attributes) {
         UserEntity user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getEmail()))
