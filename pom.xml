@@ -79,6 +79,11 @@
 			<version>2.5.5</version>
 		</dependency>
 
+		<!-- Email 인증-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 
 		<!-- Test -->
 		<dependency>
@@ -90,6 +95,12 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- @Vaild 등의 어노테이션 -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
 		</dependency>
 	</dependencies>
 
