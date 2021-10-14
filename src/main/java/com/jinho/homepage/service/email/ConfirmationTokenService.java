@@ -25,14 +25,15 @@ public class ConfirmationTokenService {
 
         Assert.hasText(email, "receiver Email은 필수 입니다.");
 
-        EmailToken emailConfirmationToken = EmailToken.createEmailConfirmationToken(email);
+        String token = this.generateAuthToken(); // Token 생성
+        EmailToken emailConfirmationToken = EmailToken.createEmailConfirmationToken(email, token);
         emailTokenRepository.save(emailConfirmationToken);
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(email);
         mailMessage.setSubject("회원가입 이메일 인증");
         // Todo : localhost 변경하기
-        mailMessage.setText("http://localhost:8080/confirm-email?token=" + emailConfirmationToken.getId());
+        mailMessage.setText("http://localhost:8080/confirm-email?token=" + token);
         emailSenderService.sendEmail(mailMessage);
 
         return emailConfirmationToken.getId();
@@ -41,11 +42,11 @@ public class ConfirmationTokenService {
     /**
      * 유효한 토큰 가져오기
      *
-     * @param confirmationTokenId
+     * @param token
      * @return
      */
-    public EmailToken findByIdAndExpirationDateAfterAndExpired(String confirmationTokenId) {
-        Optional<EmailToken> confirmationToken = emailTokenRepository.findByIdAndExpirationDateAfterAndExpired(confirmationTokenId, LocalDateTime.now(), false);
+    public EmailToken findByTokenAndExpirationDateAfterAndExpired(String token) {
+        Optional<EmailToken> confirmationToken = emailTokenRepository.findByTokenAndExpirationDateAfterAndExpired(token, LocalDateTime.now(), false);
         EmailToken emailToken = null;
         try {
             emailToken = confirmationToken.orElseThrow(() -> new BadRequestException(ValidationConstant.TOKEN_NOT_FOUND));
@@ -66,12 +67,12 @@ public class ConfirmationTokenService {
      * 인증 토큰 생성 메소드
      */
     protected String generateAuthToken() {
-        int SIZE = 10;
+        int SIZE = 12;
         char[] charSet = new char[]{
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                '!', '@', '#', '$', '%', '^', '&'};
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+        };
 
         StringBuffer sb = new StringBuffer();
         SecureRandom sr = new SecureRandom();
