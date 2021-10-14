@@ -36,6 +36,9 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "EmailCertification")
+    private boolean emailCertification; // Default = False
+
     @OneToMany(mappedBy = "user") // mappedBy : 읽기 전용
     private List<BoardEntity> boards = new ArrayList<>();
 
@@ -45,6 +48,7 @@ public class UserEntity implements UserDetails {
         this.nickName = nickName;
         this.password = password;
         this.role = role;
+        this.emailCertification = false;
     }
 
     // 사용자 권한을 반환,
@@ -92,7 +96,7 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         // 계정이 사용 가능한지 확인하는 로직
-        return true; // true -> 사용 가능
+        return emailCertification;
     }
 
     public UserEntity update(String email) {
@@ -102,5 +106,12 @@ public class UserEntity implements UserDetails {
 
     public String getRoleKey() {
         return this.role.getKey();
+    }
+
+    /**
+     * Email 인증 버튼 클릭 Event
+     */
+    public void emailVerifiedSuccess() {
+        this.emailCertification = true;
     }
 }
