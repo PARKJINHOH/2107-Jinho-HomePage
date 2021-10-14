@@ -116,7 +116,7 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
      * @param token
      */
     public void confirmEmail(String token) {
-        EmailToken findConfirmationToken = confirmationTokenService.findByIdAndExpirationDateAfterAndExpired(token);
+        EmailToken findConfirmationToken = confirmationTokenService.findByTokenAndExpirationDateAfterAndExpired(token);
         UserEntity findUserInfo = userRepository.findByEmail(findConfirmationToken.getEmail()).get();
 
         log.info("confirmEmail| Email : {}", findUserInfo.getEmail());

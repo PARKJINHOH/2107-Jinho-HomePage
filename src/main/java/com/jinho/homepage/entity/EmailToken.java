@@ -22,6 +22,9 @@ public class EmailToken {
     private String id;
 
     @Column
+    private String token;
+
+    @Column
     private LocalDateTime expirationDate;
 
     @Column
@@ -40,8 +43,9 @@ public class EmailToken {
     /**
      * 이메일 인증 토큰 생성
      */
-    public static EmailToken createEmailConfirmationToken(String email) {
+    public static EmailToken createEmailConfirmationToken(String email, String token) {
         EmailToken emailToken = new EmailToken();
+        emailToken.token = token;
         emailToken.createDate = LocalDateTime.now();
         emailToken.expirationDate = LocalDateTime.now().plusMinutes(EMAIL_TOKEN_EXPIRATION_TIME_VALUE); // 5분후 만료
         emailToken.lastModifiedDate = LocalDateTime.now();

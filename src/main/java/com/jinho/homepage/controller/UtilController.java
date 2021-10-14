@@ -14,6 +14,12 @@ public class UtilController {
 
     private final UserService userService;
 
+    /**
+     * 이메일 인증 수신
+     * @param token
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/confirm-email")
     public String viewConfirmEmail(@Valid @RequestParam String token) throws Exception {
         userService.confirmEmail(token);
