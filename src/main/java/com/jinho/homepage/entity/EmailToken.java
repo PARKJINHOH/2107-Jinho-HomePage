@@ -38,7 +38,7 @@ public class EmailToken {
     private LocalDateTime lastModifiedDate;
 
     /**
-     * 이메일 인증 토근 생성
+     * 이메일 인증 토큰 생성
      */
     public static EmailToken createEmailConfirmationToken(String email) {
         EmailToken emailToken = new EmailToken();
