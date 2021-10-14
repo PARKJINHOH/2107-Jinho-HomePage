@@ -21,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/message/**","/static/**");
+        web.ignoring().antMatchers("/messages/**","/static/**");
     }
 
     @Override

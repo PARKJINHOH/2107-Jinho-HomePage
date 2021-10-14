@@ -1,26 +1,29 @@
 package com.jinho.homepage.config;
 
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-
-import java.util.Locale;
+import org.springframework.context.support.ResourceBundleMessageSource;
 
 @Configuration
 public class SecurityMessageConfig {
 
     /*
-     * 메시지 관련 Config 파일
-     * */
+    * security_message.properties 관련 설정
+    * TODO : 적용 안됨.
+   * */
     @Bean
-    public MessageSource messageSource() {
-        Locale.setDefault(Locale.KOREA); // 위치 한국으로 설정
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
 
-        messageSource.setDefaultEncoding("UTF-8"); // 인코딩 설정
-        messageSource.setBasenames("classpath:/message/security_message", "classpath:org/springframework/security/messages"); // 커스텀한 properties 파일, security properties 파일 순서대로 설정
-        return messageSource;
+        /* message properties 위치 설정 */
+        source.setBasenames("classpath:/messages/security_message");
+
+        /* encoding 설정 */
+        source.setDefaultEncoding("UTF-8");
+
+        /* 5초간 캐싱*/
+        source.setCacheSeconds(5);
+
+        return source;
     }
-
 }
