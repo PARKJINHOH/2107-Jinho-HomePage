@@ -67,7 +67,7 @@ $(function () {
         let pw1 = $("#pw").val();
         let pw2 = $("#pw2").val();
 
-        if (pw1 === '' || pw1 === 'undefined' || pw2 === '' || pw2 === 'undefined' )
+        if (pw1 === '' || pw1 === 'undefined' || pw2 === '' || pw2 === 'undefined')
             return false;
 
         if (pw1 !== "" || pw2 !== "") {
@@ -100,4 +100,59 @@ $(function () {
             return true;
         }
     });
+});
+
+/**
+ * Email 중복 검사
+ * 1. 중복검사 후 email값을 변경했을 때 Fail 변경
+ */
+$('.email_check_input').change(function () {
+    $('#id_check_sucess').hide();
+    $('.id_overlap_button').show();
+
+    $('.email_check_input').attr("check_result", "fail");
+})
+
+$(".id_overlap_button").click(function () {
+
+    const email = $("#id").val();
+
+    $.ajax({
+        type: 'get',
+        url: '/user/emailcheck/' + email,
+        contentType: 'application/json',
+        success: function (result) {
+            console.log(result)
+            // 중복이 없을 시 : false, 중복이 있을 시 : true
+            if (result === false) {
+                alert("사용가능한 이메일 입니다.")
+                $('#id_check_sucess').show();
+                $('.id_overlap_button').hide();
+
+                $('.email_check_input').attr("check_result", "success");
+                return;
+            } else {
+                alert("이미 존재하는 이메일 입니다.")
+                return;
+            }
+        },
+        error: function (errorResult) {
+            alert("Error, 관리자에게 문의바랍니다.")
+            console.error(errorResult)
+        }
+    });
+});
+
+/**
+ * 회원가입 버튼(Submit)
+ */
+$(".submit-check").click(function () {
+    const check_result = $('.email_check_input').attr('check_result');
+
+    if (check_result === "fail") {
+        alert("이메일 중복 확인해 주세요.")
+        $("#id").focus();
+        return false;
+    }
+
 });

@@ -92,3 +92,10 @@ html, body {
     width: 300px;
 
 }
+
+/**
+ID Input
+ */
+.form-control{
+    margin-right: 10px;
+}
