@@ -128,4 +128,12 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
         userRepository.save(findUserInfo);
 
     }
+
+    /**
+     * 아이디 중복 확인
+     * @param userEmail
+     */
+    public boolean userEmailCheck(String userEmail) {
+        return userRepository.existsByEmail(userEmail);
+    }
 }
