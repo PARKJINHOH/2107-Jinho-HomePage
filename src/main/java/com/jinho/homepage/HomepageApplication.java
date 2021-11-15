@@ -24,7 +24,7 @@ public class HomepageApplication extends SpringBootServletInitializer {
 		if (profiles.equals("local")) {
 			return "D:/testFolder/";
 		} else if (profiles.equals("dev")) {
-			return "/";
+			return "/home/ubuntu/2107homepage/boardImage";
 		} else if (profiles.equals("prod")) {
 			return "/";
 		}
