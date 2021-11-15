@@ -21,7 +21,7 @@ public class ConfirmationTokenService {
     private final EmailTokenRepository emailTokenRepository;
     private final EmailSenderService emailSenderService;
 
-    public String createEmailConfirmationToken(String email) {
+    public Long createEmailConfirmationToken(String email) {
 
         Assert.hasText(email, "receiver Email은 필수 입니다.");
 
