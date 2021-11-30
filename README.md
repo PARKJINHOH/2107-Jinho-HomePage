@@ -7,8 +7,8 @@
 3. [Server] Oracle Cloud - Ubuntu Server 20.03
    1. MariaDB
    2. Nginx
-   3. Tomcat
-
+   3. Tomcat 10.0.12
+      https://jistol.github.io/docker/2017/09/19/docker-compose-tomcat-clustering/
 ### ETC
 1. Google OAuth2
 2. Jenkins
