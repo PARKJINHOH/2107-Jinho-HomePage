@@ -18,7 +18,6 @@ public class EmailToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(length = 36)
     private Long id;
 
     @Column
