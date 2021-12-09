@@ -8,7 +8,7 @@
    1. MariaDB
    2. Nginx
    3. Tomcat 10.0.12
-      https://jistol.github.io/docker/2017/09/19/docker-compose-tomcat-clustering/
+      t.ly/tUkx
 ### ETC
 1. Google OAuth2
 2. Jenkins
@@ -27,4 +27,7 @@
 6. Dev Server - Prod Server 배포과정 구축하기
    1. Jenkins 구축
    2. Jenkins - Github 연동
-7. 
+
+
+* [Error]
+1. OAuth2 Google에서 제공하는 name이 안나옴. -> db에 null값 저장.

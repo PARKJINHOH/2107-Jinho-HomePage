@@ -5,6 +5,7 @@ import com.jinho.homepage.exception.BadRequestException;
 import com.jinho.homepage.repository.EmailTokenRepository;
 import com.jinho.homepage.util.ValidationConstant;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -21,6 +22,9 @@ public class ConfirmationTokenService {
     private final EmailTokenRepository emailTokenRepository;
     private final EmailSenderService emailSenderService;
 
+    @Value("${spring.profiles.active}")
+    private String production;
+
     public Long createEmailConfirmationToken(String email) {
 
         Assert.hasText(email, "receiver Email은 필수 입니다.");
@@ -32,8 +36,17 @@ public class ConfirmationTokenService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(email);
         mailMessage.setSubject("회원가입 이메일 인증");
-        // Todo : localhost 변경하기
-        mailMessage.setText("http://localhost:8080/confirm-email?token=" + token);
+
+        if(production.equals("local")){
+            mailMessage.setText("http://localhost:8080/confirm-email?token=" + token);
+        } else if (production.equals("dev")) {
+            mailMessage.setText("http://152.69.202.176:8080/confirm-email?token=" + token);
+        } else if (production.equals("prod")) {
+//            mailMessage.setText("http://152.69.202.176:8080/confirm-email?token=" + token);
+        } else {
+            mailMessage.setText("유효하지 않습니다.");
+        }
+
         emailSenderService.sendEmail(mailMessage);
 
         return emailConfirmationToken.getId();
