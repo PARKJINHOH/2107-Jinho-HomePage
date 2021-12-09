@@ -24,25 +24,35 @@
                     <form th:action="@{/signup}" method="post">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">이메일</i></span>
+                                <span class="input-group-text">이메일</span>
                             </div>
-                            <input id="id" type="text" name="email" class="form-control" placeholder="email" maxlength="25">
-
+                            <input id="id" type="text" name="email" class="form-control email_check_input" placeholder="email" maxlength="25" check_result="fail" required>
+                            <div class="input-group-prepend">
+                                <input type="button" value="ID중복확인" class="btn float-right login_btn id_overlap_button">
+                                <img id="id_check_sucess" style="display: none;">
+                            </div>
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">비밀번호</i></span>
+                                <span class="input-group-text">비밀번호</span>
                             </div>
-                            <input id="pw" type="password" name="password" class="form-control" placeholder="password" maxlength="15">
+                            <input id="pw" type="password" name="password" class="form-control" placeholder="영문, 특수문자를 포함한 8~16글자 이내로 입력해주세요." maxlength="15">
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">닉네임</i></span>
+                                <span class="input-group-text">비밀번호 확인</span>
                             </div>
-                            <input type="text" name="nickName" class="form-control" placeholder="nickname" maxlength="10">
+                            <input id="pw2" type="password" name="password2" class="form-control" placeholder="동일한 비밀번호를 입력해주세요." maxlength="15">
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">닉네임</span>
+                            </div>
+                            <input id="nickname" type="text" name="nickname" class="form-control" placeholder="nickname" maxlength="10">
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Submit" class="btn float-right login_btn">
+                            <span class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</span>
+                            <input type="submit" value="Submit" class="btn float-right login_btn submit-check">
                         </div>
                     </form>
                 </div>
