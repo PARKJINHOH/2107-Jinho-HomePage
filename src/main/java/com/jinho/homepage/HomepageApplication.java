@@ -20,13 +20,12 @@ public class HomepageApplication extends SpringBootServletInitializer {
 	// todo : 실제 서버에 업로드시 변경해야함.
 	@Bean(name = "uploadPath")
 	public String uploadPath() {
-
 		if (profiles.equals("local")) {
 			return "D:/testFolder/";
 		} else if (profiles.equals("dev")) {
-			return "/";
+			return "/volume1/99. Google Drive/Develop/Synology_Dev_Server/image/";
 		} else if (profiles.equals("prod")) {
-			return "/";
+			return "/volume1/99. Google Drive/Develop/Synology_Prod_Server/image/";
 		}
 		return "/";
 	}
