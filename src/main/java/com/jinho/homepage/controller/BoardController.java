@@ -44,10 +44,13 @@ public class BoardController {
 
     /*자유게시판 - 상세조회*/
     @GetMapping("/forum/{boardSeq}")
-    public String getFindBoard(Model model, @PathVariable("boardSeq") Long boardSeq) {
-        BoardResDto board = boardService.findById(boardSeq);
+    public String getFindBoard(Model model, @PathVariable("boardSeq") Long boardSeq, Principal principal) {
+        String email = getEmailFromPrincipal(principal);
 
+        BoardResDto board = boardService.findById(boardSeq);
         model.addAttribute("board", board);
+        model.addAttribute("email", email);
+
         return "/subPage/forumDetail";
     }
 
@@ -60,14 +63,7 @@ public class BoardController {
     @PostMapping("/forum/write")
     public String saveBoard(BoardSaveReqDto boardSaveReqDto, Principal principal) {
 
-        String email;
-        if (!(principal instanceof UsernamePasswordAuthenticationToken)) {
-            OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken) principal;
-            Map<String, Object> userAttributes = authToken.getPrincipal().getAttributes();
-            email = (String) userAttributes.get("email");
-        } else {
-            email = principal.getName();
-        }
+        String email = getEmailFromPrincipal(principal);
         boardService.boardSave(boardSaveReqDto, email);
 
         return "redirect:/forum";
@@ -120,7 +116,7 @@ public class BoardController {
 
     /* 자유게시판 - 삭제 */
     @PostMapping("/forum/delete")
-    public ResponseEntity<Long> boardDelete(@RequestBody BoardResDto boardResDto) {
+    public ResponseEntity<Long> boardDelete(@RequestBody BoardResDto boardResDto, Principal principal) {
 
         Long boardSeq = boardResDto.getBoardSeq();
 
@@ -129,7 +125,8 @@ public class BoardController {
         // 작성자 == 사용자 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            currentUserName = authentication.getName();
+//            currentUserName = authentication.getName();
+            currentUserName = getEmailFromPrincipal(principal);
         }
 
         if (currentUserName != null && currentUserName.equals(boardService.findById(boardSeq).getEmail())) {
@@ -139,6 +136,21 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+
+
+
+
+    //======= Class Method =======//
+    private String getEmailFromPrincipal(Principal principal) {
+        if (!(principal instanceof UsernamePasswordAuthenticationToken)) {
+            OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken) principal;
+            Map<String, Object> userAttributes = authToken.getPrincipal().getAttributes();
+            return (String) userAttributes.get("email");
+        } else {
+            return principal.getName();
+        }
     }
 
 }
