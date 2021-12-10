@@ -12,8 +12,10 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -56,7 +59,17 @@ public class BoardController {
 
     @PostMapping("/forum/write")
     public String saveBoard(BoardSaveReqDto boardSaveReqDto, Principal principal) {
-        boardService.boardSave(boardSaveReqDto, principal.getName());
+
+        String email;
+        if (!(principal instanceof UsernamePasswordAuthenticationToken)) {
+            OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken) principal;
+            Map<String, Object> userAttributes = authToken.getPrincipal().getAttributes();
+            email = (String) userAttributes.get("email");
+        } else {
+            email = principal.getName();
+        }
+        boardService.boardSave(boardSaveReqDto, email);
+
         return "redirect:/forum";
     }
 
@@ -78,7 +91,7 @@ public class BoardController {
             UploadFileEntity uploadFile = imageService.load(fileSeq);
             Resource resource = resourceLoader.getResource("file:" + uploadFile.getFilePath());
             return ResponseEntity.ok().body(resource);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
@@ -86,7 +99,7 @@ public class BoardController {
 
     /* 자유게시판 - 수정 */
     @GetMapping("/forum/update/{boardSeq}")
-    public String getBoardUpdate(@PathVariable Long boardSeq, Model model){
+    public String getBoardUpdate(@PathVariable Long boardSeq, Model model) {
         BoardResDto boardResDto = boardService.findById(boardSeq);
 
         model.addAttribute("board", boardResDto);
@@ -96,7 +109,7 @@ public class BoardController {
     }
 
     @PostMapping("/forum/update")
-    public String boardUpdate(@RequestParam Long boardSeq, BoardUpdateDto boardUpdateDto){
+    public String boardUpdate(@RequestParam Long boardSeq, BoardUpdateDto boardUpdateDto) {
 
         boardService.boardUpdate(boardSeq, boardUpdateDto);
 
@@ -107,7 +120,7 @@ public class BoardController {
 
     /* 자유게시판 - 삭제 */
     @PostMapping("/forum/delete")
-    public ResponseEntity<Long> boardDelete(@RequestBody BoardResDto boardResDto){
+    public ResponseEntity<Long> boardDelete(@RequestBody BoardResDto boardResDto) {
 
         Long boardSeq = boardResDto.getBoardSeq();
 
