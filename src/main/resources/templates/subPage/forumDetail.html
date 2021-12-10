@@ -19,7 +19,7 @@
             <th>
                 <span class="badge badge-secondary">자유게시판</span>
             </th>
-            <div class="form-group" th:if="${#authentication.getName()} == ${board.getWriter()}">
+            <div class="form-group" th:if="${#authentication.getName()} == ${board.getEmail()}">
                 <input id="board_seq" type="hidden" th:value="${board.getBoardSeq()}" />
                 <button id="update" type="button" class="btn btn-info" th:onclick="|window.location.href='/forum/update/${board.boardSeq}'|">수정</button>
                 <button id="delete" type="button" class="btn btn-info">삭제</button>
