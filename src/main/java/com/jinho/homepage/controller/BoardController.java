@@ -56,8 +56,7 @@ public class BoardController {
 
     @PostMapping("/forum/write")
     public String saveBoard(BoardSaveReqDto boardSaveReqDto, Principal principal) {
-        boardSaveReqDto.setWriter(principal.getName());
-        boardService.boardSave(boardSaveReqDto);
+        boardService.boardSave(boardSaveReqDto, principal.getName());
         return "redirect:/forum";
     }
 
@@ -120,7 +119,7 @@ public class BoardController {
             currentUserName = authentication.getName();
         }
 
-        if (currentUserName != null && currentUserName.equals(boardService.findById(boardSeq).getWriter())) {
+        if (currentUserName != null && currentUserName.equals(boardService.findById(boardSeq).getEmail())) {
             boardService.boardDelete(boardSeq);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

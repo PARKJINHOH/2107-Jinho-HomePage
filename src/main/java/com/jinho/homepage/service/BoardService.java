@@ -4,7 +4,9 @@ import com.jinho.homepage.dto.BoardResDto;
 import com.jinho.homepage.dto.BoardSaveReqDto;
 import com.jinho.homepage.dto.BoardUpdateDto;
 import com.jinho.homepage.entity.BoardEntity;
+import com.jinho.homepage.entity.UserEntity;
 import com.jinho.homepage.repository.BoardRepository;
+import com.jinho.homepage.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
     /* 게시글 - 목록 조회 */
     @Transactional(readOnly = true)
@@ -38,8 +41,11 @@ public class BoardService {
 
     /* 게시글 - 등록 */
     @Transactional
-    public Long boardSave(BoardSaveReqDto boardSaveReqDto) {
-        return boardRepository.save(boardSaveReqDto.toEntity()).getBoardSeq();
+    public Long boardSave(BoardSaveReqDto boardSaveReqDto, String email) {
+        UserEntity userEntity = userRepository.findByEmail(email).get();
+        boardSaveReqDto.setNickname(userEntity.getNickname());
+
+        return boardRepository.save(boardSaveReqDto.toEntity(userEntity)).getBoardSeq();
     }
 
     /* 게시글 - 수정 */
