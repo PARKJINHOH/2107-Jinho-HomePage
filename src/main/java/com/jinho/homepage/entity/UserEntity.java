@@ -27,7 +27,7 @@ public class UserEntity implements UserDetails {
     private String email;
 
     @Column(name = "nickname")
-    private String nickName;
+    private String nickname;
 
     @Column(name = "password")
     private String password;
@@ -43,9 +43,9 @@ public class UserEntity implements UserDetails {
     private List<BoardEntity> boards = new ArrayList<>();
 
     @Builder
-    public UserEntity(String email, String nickName, String password, Role role) {
+    public UserEntity(String email, String nickname, String password, Role role) {
         this.email = email;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.password = password;
         this.role = role;
         this.emailCertification = false;

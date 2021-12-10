@@ -9,13 +9,15 @@ import lombok.NoArgsConstructor;
 public class BoardResDto {
 
     private Long boardSeq;
-    private String writer;
+    private String email; // 수정&삭제 비교변수
+    private String nickname;
     private String title;
     private String content;
 
     public BoardResDto(BoardEntity board) {
+        this.email = board.getUser().getEmail();
         this.boardSeq = board.getBoardSeq();
-        this.writer = board.getWriter();
+        this.nickname = board.getNickname();
         this.title = board.getTitle();
         this.content = board.getContent();
     }
