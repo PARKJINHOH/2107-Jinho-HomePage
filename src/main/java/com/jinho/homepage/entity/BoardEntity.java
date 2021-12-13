@@ -18,8 +18,8 @@ public class BoardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardSeq;
 
-    @Column(name = "board_writer")
-    private String writer;
+    @Column(name = "board_nickname")
+    private String nickname;
 
     @Column(name = "board_title")
     private String title;
@@ -33,10 +33,11 @@ public class BoardEntity {
     private UserEntity user;
 
     @Builder
-    public BoardEntity(String writer, String title, String content) {
-        this.writer = writer;
+    public BoardEntity(String nickname, String title, String content, UserEntity user) {
+        this.nickname = nickname;
         this.title = title;
         this.content = content;
+        this.user = user;
     }
 
     public void boardUpdate(String title, String content) {

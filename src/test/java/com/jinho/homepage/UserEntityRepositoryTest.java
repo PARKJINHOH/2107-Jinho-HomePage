@@ -24,7 +24,7 @@ public class UserEntityRepositoryTest {
         UserEntity user = UserEntity.builder()
                 .email("test@naver.com")
                 .password("1234")
-                .nickName("test")
+                .nickname("test")
                 .role(Role.USER)
                 .build();
 
@@ -46,21 +46,21 @@ public class UserEntityRepositoryTest {
         UserEntity user1 = UserEntity.builder()
                 .email("user1@nvaer.com")
                 .password("1234")
-                .nickName("test")
+                .nickname("test")
                 .role(Role.USER)
                 .build();
 
         UserEntity user2 = UserEntity.builder()
                 .email("user2@nvaer.com")
                 .password("1234")
-                .nickName("test")
+                .nickname("test")
                 .role(Role.USER)
                 .build();
 
         UserEntity user3 = UserEntity.builder()
                 .email("user2@nvaer.com")
                 .password("1234")
-                .nickName("test")
+                .nickname("test")
                 .role(Role.USER)
                 .build();
 
