@@ -1,6 +1,7 @@
 package com.jinho.homepage.dto;
 
 import com.jinho.homepage.entity.BoardEntity;
+import com.jinho.homepage.entity.UserEntity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,22 +10,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BoardSaveReqDto {
 
-    private String writer;
+    private String nickname;
     private String title;
     private String content;
 
     @Builder
-    public BoardSaveReqDto(String writer, String title, String content) {
-        this.writer = writer;
+    public BoardSaveReqDto(String nickname, String title, String content) {
+        this.nickname = nickname;
         this.title = title;
         this.content = content;
     }
 
-    public BoardEntity toEntity() {
+    public BoardEntity toEntity(UserEntity userEntity) {
         return BoardEntity.builder()
-                .writer(writer)
+                .nickname(nickname)
                 .title(title)
                 .content(content)
+                .user(userEntity)
                 .build();
     }
 }

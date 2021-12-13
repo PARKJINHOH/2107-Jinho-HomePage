@@ -12,8 +12,10 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,10 +44,13 @@ public class BoardController {
 
     /*자유게시판 - 상세조회*/
     @GetMapping("/forum/{boardSeq}")
-    public String getFindBoard(Model model, @PathVariable("boardSeq") Long boardSeq) {
-        BoardResDto board = boardService.findById(boardSeq);
+    public String getFindBoard(Model model, @PathVariable("boardSeq") Long boardSeq, Principal principal) {
+        String email = getEmailFromPrincipal(principal);
 
+        BoardResDto board = boardService.findById(boardSeq);
         model.addAttribute("board", board);
+        model.addAttribute("email", email);
+
         return "/subPage/forumDetail";
     }
 
@@ -56,8 +62,10 @@ public class BoardController {
 
     @PostMapping("/forum/write")
     public String saveBoard(BoardSaveReqDto boardSaveReqDto, Principal principal) {
-        boardSaveReqDto.setWriter(principal.getName());
-        boardService.boardSave(boardSaveReqDto);
+
+        String email = getEmailFromPrincipal(principal);
+        boardService.boardSave(boardSaveReqDto, email);
+
         return "redirect:/forum";
     }
 
@@ -79,7 +87,7 @@ public class BoardController {
             UploadFileEntity uploadFile = imageService.load(fileSeq);
             Resource resource = resourceLoader.getResource("file:" + uploadFile.getFilePath());
             return ResponseEntity.ok().body(resource);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
@@ -87,7 +95,7 @@ public class BoardController {
 
     /* 자유게시판 - 수정 */
     @GetMapping("/forum/update/{boardSeq}")
-    public String getBoardUpdate(@PathVariable Long boardSeq, Model model){
+    public String getBoardUpdate(@PathVariable Long boardSeq, Model model) {
         BoardResDto boardResDto = boardService.findById(boardSeq);
 
         model.addAttribute("board", boardResDto);
@@ -97,7 +105,7 @@ public class BoardController {
     }
 
     @PostMapping("/forum/update")
-    public String boardUpdate(@RequestParam Long boardSeq, BoardUpdateDto boardUpdateDto){
+    public String boardUpdate(@RequestParam Long boardSeq, BoardUpdateDto boardUpdateDto) {
 
         boardService.boardUpdate(boardSeq, boardUpdateDto);
 
@@ -108,7 +116,7 @@ public class BoardController {
 
     /* 자유게시판 - 삭제 */
     @PostMapping("/forum/delete")
-    public ResponseEntity<Long> boardDelete(@RequestBody BoardResDto boardResDto){
+    public ResponseEntity<Long> boardDelete(@RequestBody BoardResDto boardResDto, Principal principal) {
 
         Long boardSeq = boardResDto.getBoardSeq();
 
@@ -117,16 +125,32 @@ public class BoardController {
         // 작성자 == 사용자 확인
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            currentUserName = authentication.getName();
+//            currentUserName = authentication.getName();
+            currentUserName = getEmailFromPrincipal(principal);
         }
 
-        if (currentUserName != null && currentUserName.equals(boardService.findById(boardSeq).getWriter())) {
+        if (currentUserName != null && currentUserName.equals(boardService.findById(boardSeq).getEmail())) {
             boardService.boardDelete(boardSeq);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+
+
+
+
+    //======= Class Method =======//
+    private String getEmailFromPrincipal(Principal principal) {
+        if (!(principal instanceof UsernamePasswordAuthenticationToken)) {
+            OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken) principal;
+            Map<String, Object> userAttributes = authToken.getPrincipal().getAttributes();
+            return (String) userAttributes.get("email");
+        } else {
+            return principal.getName();
+        }
     }
 
 }

@@ -21,7 +21,7 @@ public class BoardRepositoryTest {
         BoardEntity buildBoard = BoardEntity.builder()
                 .title("테스트 타이틀")
                 .content("테스트 본문")
-                .writer("test@naver.com")
+                .nickname("test@naver.com")
                 .build();
         boardRepository.save(buildBoard);
 

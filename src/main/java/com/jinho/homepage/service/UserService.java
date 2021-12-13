@@ -64,7 +64,7 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
 
         UserEntity user = UserEntity.builder()
                 .email(userDto.getEmail())
-                .nickName(userDto.getNickName())
+                .nickname(userDto.getNickname())
                 .role(Role.USER)
                 .password(userDto.getPassword()).build();
 
@@ -80,10 +80,12 @@ public class UserService implements UserDetailsService, OAuth2UserService<OAuth2
         OAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
+        // 서비스 구분 (네이버 로그인인지, 구글 로그인 인지)
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        String userNameAttributeName = userRequest.getClientRegistration()
-                .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+        // OAuth2 로그인 진행시 키가 되는 필드값(Google : "sub") PK와 같은 값(네이버, 카카오 지원x)
+        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
+        // 가져온 Data
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         UserEntity user = saveOrUpdate(attributes);
