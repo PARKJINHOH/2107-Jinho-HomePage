@@ -23,9 +23,9 @@ public class HomepageApplication extends SpringBootServletInitializer {
 		if (profiles.equals("local")) {
 			return "D:/testFolder/";
 		} else if (profiles.equals("dev")) {
-			return "/volume1/99. Google Drive/Develop/Synology_Dev_Server/image/";
+			return "/home/ubuntu/2107homepage/image";
 		} else if (profiles.equals("prod")) {
-			return "/volume1/99. Google Drive/Develop/Synology_Prod_Server/image/";
+			return "/";
 		}
 		return "/";
 	}
