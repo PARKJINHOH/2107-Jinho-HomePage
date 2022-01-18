@@ -40,9 +40,9 @@ public class ConfirmationTokenService {
         if(production.equals("local")){
             mailMessage.setText("http://localhost:8080/confirm-email?token=" + token);
         } else if (production.equals("dev")) {
-            mailMessage.setText("http://152.69.202.176:8080/confirm-email?token=" + token);
+            mailMessage.setText("http://112.170.181.23:8011/confirm-email?token=" + token);
         } else if (production.equals("prod")) {
-//            mailMessage.setText("http://152.69.202.176:8080/confirm-email?token=" + token);
+//            mailMessage.setText("http://112.170.181.23:8011/confirm-email?token=" + token);
         } else {
             mailMessage.setText("유효하지 않습니다.");
         }
