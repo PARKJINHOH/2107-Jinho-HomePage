@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
-public class UtilController {
+public class EmailController {
 
     private final UserService userService;
 
@@ -21,7 +21,7 @@ public class UtilController {
      * @throws Exception
      */
     @GetMapping("/confirm-email")
-    public String viewConfirmEmail(@Valid @RequestParam String token) throws Exception {
+    public String viewConfirmEmail(@Valid @RequestParam String token) {
         userService.confirmEmail(token);
 
         return "redirect:/login";
