@@ -144,7 +144,9 @@ public class BoardController {
 
     //======= Class Method =======//
     private String getEmailFromPrincipal(Principal principal) {
-        if (!(principal instanceof UsernamePasswordAuthenticationToken)) {
+        if(principal == null){
+            return null;
+        } else if (!(principal instanceof UsernamePasswordAuthenticationToken)) {
             OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken) principal;
             Map<String, Object> userAttributes = authToken.getPrincipal().getAttributes();
             return (String) userAttributes.get("email");
